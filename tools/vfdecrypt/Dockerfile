@@ -6,4 +6,4 @@ COPY ../ /vfdecrypt
 
 WORKDIR /vfdecrypt
 
-RUN make
+CMD make
