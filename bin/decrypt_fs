@@ -22,9 +22,15 @@ if test -z "$rootfs_key"; then
     ln -f "$dmg" "$decrypted" > /dev/null 2>&1
     warn_if_error
 else
-    debug "Decrypting dmg file $dmg to $decrypted ..."
-    debug "$VFDECRYPT -k$rootfs_key -i$dmg -o$decrypted"
-    "$VFDECRYPT" -k"$rootfs_key" -i"$dmg" -o"$decrypted" > /dev/null 2>&1
+
+    echo "" > "$decrypted"
+
+    dmg_absolute=$(readlink -f "$dmg")
+    decrypted_absolute=$(readlink -f "$decrypted")
+
+    docker run -v "$dmg_absolute":/in -v "$decrypted_absolute":/out -t vfdecrypt:latest -k$rootfs_key /in /out > /dev/null 2>&1
+
+    
     warn_if_error
 fi
 
