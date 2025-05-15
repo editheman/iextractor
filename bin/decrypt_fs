@@ -28,7 +28,7 @@ else
     dmg_absolute=$(readlink -f "$dmg")
     decrypted_absolute=$(readlink -f "$decrypted")
 
-    docker run -v "$dmg_absolute":/in -v "$decrypted_absolute":/out -t vfdecrypt:latest -k$rootfs_key /in /out > /dev/null 2>&1
+    docker run -v "$dmg_absolute":/in -v "$decrypted_absolute":/out -t ghcr.io/malus-security/vfdecrypt:latest -k$rootfs_key /in /out > /dev/null 2>&1
 
     
     warn_if_error
